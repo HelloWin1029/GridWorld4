@@ -29,7 +29,7 @@ public class KingCrab extends CrabCritter
     {
         for (Actor a : actors)
         {
-            Location loc = a.getAdjacentLocation(a.getDirection());
+            Location loc = a.getLocation().getAdjacentLocation(a.getDirection());
             if (getGrid().isValid(loc))
 				a.moveTo(loc);
 			else
