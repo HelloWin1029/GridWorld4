@@ -1,6 +1,7 @@
 import info.gridworld.actor.Actor;
 import info.gridworld.actor.Critter;
 import info.gridworld.grid.Location;
+import info.gridworld.grid.Grid;
 
 import java.util.ArrayList;
 
@@ -23,14 +24,22 @@ public class QuickCrab extends CrabCritter
     public ArrayList<Location> getMoveLocations()
     {
         ArrayList<Location> locs = new ArrayList<Location>();
-        Location loc = getAdjacentLocation(getDirection() + Location.LEFT);
-        Location loc2 = loc.getAdjacentLocation(loc.getDirection());
-        if (getGrid().isValid(loc2)) locs.add(loc2);
+
+        int dir = (getDirection() + Location.LEFT + Location.FULL_CIRCLE) % Location.FULL_CIRCLE;
+        Location left1 = getLocation().getAdjacentLocation(dir);
+        Grid<Actor> gr = getGrid();
+        if (gr.isValid(left1) && gr.get(left1) == null){
+            Location left2 = left1.getAdjacentLocation(dir);
+            if (gr.isValid(left2) && gr.get(left2) == null) locs.add(left2);
+        }
         
-        loc3 = getAdjacentLocation(getDirection() + Location.RIGHT);
-        loc4 = loc.getAdjacentLocation(loc.getDirection());
-        if (getGrid().isValid(loc2)) locs.add(loc2);
-        
+        dir = (getDirection() + Location.RIGHT + Location.FULL_CIRCLE) % Location.FULL_CIRCLE;
+        Location right1 = getLocation().getAdjacentLocation(dir);
+        if (gr.isValid(right1) && gr.get(right1) == null){
+            Location right2 = right1.getAdjacentLocation(dir);
+            if (gr.isValid(right2) && gr.get(right2) == null) locs.add(right2);
+        }
+
         if (locs.size() == 0){
 			locs = super.getMoveLocations();
         return locs;
