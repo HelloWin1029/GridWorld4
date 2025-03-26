@@ -40,7 +40,7 @@ public class QuickCrab extends CrabCritter
             if (gr.isValid(right2) && gr.get(right2) == null) locs.add(right2);
         }
 
-        if (locs.size() == 0){
+        if (locs.size() == 0)
 			locs = super.getMoveLocations();
         return locs;
     }
